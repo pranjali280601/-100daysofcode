@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int>ans;
+	vector<int>dfsOfGraph(int V, vector<int> adj[]){
+	    vector<bool>visited(V,false);
+	    dfs(adj,visited,0);
+	    vector<int>result(V);
+	    for(int i=0;i<V;i++)
+	    result[i]=ans[i];
+	    return result;
+	}
+	void dfs(vector<int> adj[], vector<bool> visited,int cur){
+	    visited[cur]=true;
+	    ans.push_back(cur);
+	    for(int i=0;i<adj[cur].size();i++)
+	    if(!visited[adj[cur][i]])
+	    dfs(adj,visited,adj[cur][i]);
+	}
+};
