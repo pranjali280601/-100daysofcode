@@ -1,0 +1,35 @@
+bool issafe(vector<vector<bool>>& visited, vector<vector<char>>& grid, int row, int col){
+        
+        return (row<grid.size()) && (col<grid[0].size()) && (row>=0) && (col>=0) && (grid[row][col]=='1') && (!visited[row][col]);
+        
+    }
+    void dfs(vector<vector<bool>>& visited, vector<vector<char>>& grid, int row, int col){
+        static int rownbr[]={-1,-1,-1,0,0,1,1,1};
+        static int colnbr[]={-1,0,1,-1,1,-1,0,1};
+        visited[row][col]=true;
+        for(int k=0;k<8;k++)
+        if(issafe(visited,grid,row+rownbr[k],col+colnbr[k]))
+        dfs(visited,grid,row+rownbr[k],col+colnbr[k]);
+        
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        // Code here
+        int row=grid.size();
+        int col=grid[0].size();
+        vector<vector<bool>>visited(row,vector<bool>(col,false));
+        int count=0;
+        for(int i=0;i<row;++i){
+            for(int j=0;j<col;++j){
+                if(grid[i][j]=='1' && !visited[i][j])
+                {
+                    ++count;
+                    
+                    dfs(visited,grid,i,j);
+                    
+                }
+               
+            }
+        }
+        return count;
+        
+    }
