@@ -1,0 +1,33 @@
+vector<vector<int>> transitiveClosure(int N, vector<vector<int>> graph)
+    {
+        int i,j;
+        vector<vector<int>>ans(N,vector<int>(N,0));
+        vector<vector<int>>adj;
+        for(i=0;i<N;i++)
+        ans[i][i]=1;
+        for(i=0;i<N;i++){
+            vector<int>vec;
+            for(j=0;j<N;j++)
+            if(graph[i][j]==1)
+            vec.push_back(j);
+            adj.push_back(vec);
+        }
+        for(i=0;i<N;i++){
+            vector<bool>visited(N,false);
+            if(adj[i].size()>0)
+                dfs(adj,visited,i);
+            for(j=0;j<N;j++){
+                if(visited[j])
+                ans[i][j]=1;
+            }
+        }
+         
+    return ans;
+    }
+    
+    void dfs(vector<vector<int>>&adj,vector<bool>&visited, int cur){
+        visited[cur]=true;
+        for(int i=0;i<adj[cur].size();i++)
+        if(!visited[adj[cur][i]])
+        dfs(adj,visited,adj[cur][i]);
+    }
