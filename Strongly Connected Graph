@@ -1,0 +1,77 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+ 
+// Data structure to store a graph edge
+struct Edge {
+    int src, dest;
+};
+ 
+// A class to represent a graph object
+class Graph
+{
+public:
+ 
+    // a vector of vectors to represent an adjacency list
+    vector<vector<int>> adjList;
+ 
+    // Graph Constructor
+    Graph(vector<Edge> const &edges, int N)
+    {
+        // resize the vector to hold `N` elements of type `vector<int>`
+        adjList.resize(N);
+ 
+        // add edges to the directed graph
+        for (auto &edge: edges) {
+            adjList[edge.src].push_back(edge.dest);
+        }
+    }
+};
+void DFS(Graph const &graph, vector<bool> &visited, int cur){
+    visited[cur]=true;
+     for (int i: graph.adjList[cur])
+    {
+        if (!visited[i]) {
+            DFS(graph,visited,i);
+        }
+    }
+}
+bool check(Graph const &graph, int N){
+    int flag=0;
+    for(int i=0;i<N;i++){
+        vector<bool>visited(N,false);
+        DFS(graph,visited,i);
+        for(int j=0;j<N;j++)
+            if(!visited[j])
+            return false;
+    }
+    
+    return true;
+}
+
+ int main()
+{
+    // vector of graph edges as per the above diagram
+    vector<Edge> edges = {
+        {0, 4}, {1, 0}, {1, 2}, {2, 1}, {2, 4},
+        {3, 1}, {3, 2}, {4, 3}
+    };
+ 
+    // total number of nodes in the graph
+    int N = 5;
+ 
+    // build a graph from the given edges
+    Graph graph(edges, N);
+ 
+    // check if the graph is not strongly connected or not
+    if (check(graph, N)) {
+        cout << "The graph is strongly connected";
+    }
+    else {
+        cout << "The graph is not strongly connected";
+    }
+ 
+    return 0;
+}
+// Function to perform DFS traversal on the graph on a graph
