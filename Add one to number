@@ -1,0 +1,37 @@
+vector<int> Solution::plusOne(vector<int> &a) {
+    int n=a.size(),i,flag=0;
+    vector<int>ans(n+1);
+    vector<int>A;
+    int k=0;
+    while(a[k]==0 && n>1)
+    ++k;
+    int c=0;
+    for(i=k;i<n;i++){
+        A.push_back(a[i]);
+    }
+    n=A.size();
+    if(A[n-1]<9)
+    A[n-1]=A[n-1]+1;
+    else{
+        i=n-1;
+        while(i>=0 && A[i]==9){
+            A[i]=0;
+            i--;
+        }
+        
+        if(i==-1)
+        {
+            flag=1;
+            for(int j=n;j>0;j--)
+            ans[j]=A[j-1];
+            ans[0]=1;
+        }
+        else
+        A[i]=A[i]+1;
+    }
+    if(flag==1)
+    return ans;
+    return A;
+    
+    
+}
