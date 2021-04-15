@@ -1,0 +1,46 @@
+
+int maxnode=-1,maxd=-1;
+
+vector<vector<int>> formadj(vector<int> &A){
+    
+    vector<vector<int>>adj(A.size());
+    for(int i=0;i<A.size();i++)
+    if(A[i]!=-1)
+    {
+        adj[A[i]].push_back(i);
+        adj[i].push_back(A[i]);
+    }
+    return adj;
+}
+
+void dfs(vector<vector<int>>&adj, vector<bool>&visited, int cur,int d){
+    visited[cur]=true;
+     if(d>maxd){
+        maxd=d;
+        maxnode=cur;
+    }
+    for(int i : adj[cur])
+        if(!visited[i])
+         dfs(adj,visited,i,d+1);
+}
+
+void setclear( vector<bool>&visited){
+    maxd=-1;
+    for(int i=0;i<visited.size();i++)
+    visited[i]=false;
+}
+int Solution::solve(vector<int> &A) {
+   
+    vector<vector<int>>adj=formadj(A);
+ 
+    if(A.size()<=2)
+    return A.size()-1;
+    vector<bool>visited(A.size(),false);
+    setclear(visited);
+   
+    dfs(adj,visited,0,0);
+    setclear(visited);
+    dfs(adj,visited,maxnode,0);
+    return maxd;
+}
+
