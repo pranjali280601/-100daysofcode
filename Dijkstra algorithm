@@ -1,0 +1,58 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define V 6		//No of vertices
+
+int minvertex(vector<int>& value,vector<bool>& visited)
+{
+    int min=INT_MAX,vertex;
+    for(int i=0;i<V;i++){
+        if(!visited[i] && min>value[i]){
+            min=value[i];
+            vertex=i;
+        }
+    }
+    return vertex;
+
+}
+
+void dijkstra(int graph[V][V])
+{
+    vector<int>value(V,INT_MAX);
+    vector<bool>visited(V,false);
+    vector<int>parent(V,-1);
+    value[0]=0;
+    
+    
+    for(int i=0;i<V-1;i++){
+        
+        int cur=minvertex(value,visited);
+        visited[cur]=true;
+        for(int j=0;j<V;j++){
+        if(graph[cur][j] && !visited[j] && value[cur]!=INT_MAX && value[cur]+graph[cur][j]<value[j] )
+        {
+            value[j]=value[cur]+graph[cur][j];
+            parent[j]=cur;
+        }
+        }
+    }
+	//Print Shortest Path Graph
+	for(int i=1;i<V;++i)
+		cout<<"U->V: "<<parent[i]<<"->"<<i<<"  wt = "<<graph[parent[i]][i]<<"\n";
+}
+
+int main()
+{
+	int graph[V][V] = { {0, 1, 4, 0, 0, 0},
+						{1, 0, 4, 2, 7, 0},
+						{4, 4, 0, 3, 5, 0},
+						{0, 2, 3, 0, 4, 6},
+						{0, 7, 5, 4, 0, 7},
+						{0, 0, 0, 6, 7, 0} };
+
+	dijkstra(graph);	
+	return 0;
+}
+
+//TIME COMPLEXITY: O(V^2)
+//TIME COMPLEXITY: (using Min-Heap + Adjacency_List): O(ElogV)
