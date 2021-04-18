@@ -1,0 +1,53 @@
+vector<int> Solution::spiralOrder(const vector<vector<int> > &A) {
+    int l=0,d=A.size()-1,u=0,r=A[0].size()-1;
+    vector<int>ans;
+    int dir[]={0,1,2,3};
+    int a=0,i;
+    while(l<=r && u<=d){
+        
+        if(a==0){
+            i=l;
+            while(i<=r){
+            ans.push_back(A[u][i]);
+            i++;
+            }
+            u++;
+            a++;
+
+        }
+        else if(a==1){
+            i=u;
+            while(i<=d){
+                ans.push_back(A[i][r]);
+                i++;
+            }
+        
+            r--;
+            a++;
+        }
+        else if(a==2){
+            i=r;
+            while(i>=l){
+                ans.push_back(A[d][i]);
+                i--;
+            }
+            d--;
+            a++;
+        
+        }
+        else if(a==3){
+            i=d;
+            while(i>=u){
+                ans.push_back(A[i][l]);
+                i--;
+            }
+            l++;
+            a++;
+        
+        }
+        a=a%4;
+        
+        
+    }
+    return ans;
+}
