@@ -1,0 +1,81 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+void updateValueUtil(int *st,int ss,int se,int pos,int diff,int si){
+    
+
+    if(pos>se || pos<ss)
+    return;
+    
+    st[si] = st[si] + diff;
+    if (se != ss)
+    {
+        int mid =( ss+ se)/2;
+        updateValueUtil(st, ss, mid, pos, diff, 2*si + 1);
+        updateValueUtil(st, mid+1, se, pos, diff, 2*si + 2);
+    }
+}
+void updateValue(int arr[], int *st,int n, int pos, int val){
+    
+    int diff=val - arr[pos];
+    arr[pos]=val;
+    updateValueUtil(st,0,n-1,pos,diff,0);
+    
+}
+int getsumUtil(int *st,int ss,int se,int l,int r,int si){
+    
+    if(l<=ss && r>=se)
+    return st[si];
+    
+    if(ss>r || se<l)
+    return 0;
+    
+   int mid=(ss+se)/2;
+    return getsumUtil(st,ss,mid,l,r,2*si+1)+getsumUtil(st,mid+1,se,l,r,2*si+2);
+}
+int getSum(int *st,int n, int l, int r){
+    if(l<0 || r>n || l>r)
+    return -1;
+    return getsumUtil(st,0,n-1,l,r,0);
+}
+int constructSTUtil(int arr[],int ss ,int se,int *st,int si ){
+    if(ss==se){
+        st[si]=arr[ss];
+        return arr[ss];
+    }
+    int mid=(ss+se)/2;
+    st[si]=constructSTUtil(arr,ss,mid,st,si*2+1)+
+            constructSTUtil(arr,mid+1,se,st,si*2+2);
+            return st[si];
+    
+}
+
+int * constructST(int arr[], int n){
+    int x = (int)(ceil(log2(n)));
+    int max_size = 2*(int)pow(2, x) - 1;
+    int *st = new int[max_size];
+ 
+    constructSTUtil(arr, 0, n-1, st, 0);
+ 
+    return st;
+}
+int main()
+{
+    int arr[] = {1, 3, 5, 7, 9, 11};
+    int n = sizeof(arr)/sizeof(arr[0]);
+ 
+    // Build segment tree from given array
+    int *st = constructST(arr, n);
+ 
+    // Print sum of values in array from index 1 to 3
+    cout<<"Sum of values in given range = "<<getSum(st, n, 1, 3)<<endl;
+ 
+    // Update: set arr[1] = 10 and update corresponding
+    // segment tree nodes
+    updateValue(arr, st, n, 1, 10);
+ 
+    // Find sum after the value is updated
+    cout<<"Updated sum of values in given range = "
+            <<getSum(st, n, 1, 3)<<endl;
+    return 0;
+}
