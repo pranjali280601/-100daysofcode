@@ -1,0 +1,23 @@
+int Solution::divide(int a, int b) {
+    long long t=0,sign=-1,A=a,B=b;
+    long long q=0;
+    if(A<0 && B<0)
+    sign=1;
+    if(A>0 && B>0)
+    sign=1;
+    A=abs(A);
+    B=abs(B);
+    
+    for(long long i=31;i>=0;i--){
+        
+        if(t+(B<<i)<=A){
+            t+=(B<<i);
+            q=q|(1LL<<i);
+            
+        }
+    }
+    
+    q=q*sign;
+    
+    return (q<INT_MIN )||(q>INT_MAX)?INT_MAX:q ;
+}
