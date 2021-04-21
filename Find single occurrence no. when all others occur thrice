@@ -1,0 +1,14 @@
+int Solution::singleNumber(const vector<int> &A) {
+    int c=0,ans=0;
+    for(int i=0;i<32;i++){
+      c=0;
+      for(int j=0;j<A.size();j++){
+        if(A[j]&(1<<i))
+        c++;
+      }
+      if(C%3)
+      ans+=pow(2,i);
+      }
+    return ans;
+ }
+        
