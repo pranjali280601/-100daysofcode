@@ -1,0 +1,17 @@
+int solveUtil(int A){
+    int x=0;
+    while(pow(2,x)<=A)
+    x++;
+    x--;
+   if(x<=0)
+   return A;
+   
+   long long  ans=pow(2,x-1)*x+A-pow(2,x)+1+solveUtil(A-pow(2,x));
+   ans=ans%1000000007;
+    return ans ;
+   
+}
+    int Solution::solve(int A) {
+ 
+    return  solveUtil(A);
+}
