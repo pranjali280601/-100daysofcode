@@ -1,0 +1,39 @@
+vector<int> Solution::flip(string A) {
+  int n = A.size();
+
+int l =0 , r =0 ;
+int s = 0;
+int L,R;
+int ans = INT_MIN;
+
+ vector<int>res;
+ int c =0 ;
+ for( int i = 0 ; i< n ;i++ ){ if( A[i] == '1' )c++;  }
+
+ if( c == n )return res;
+
+for( int i = 0  ; i<n ; i++ )
+{
+    
+    if( A[i] == '0' ){ s++; r = i ;}
+    
+    else if ( A[i] == '1' )
+    {
+        s-- ; 
+    
+        if( s < 0 ) { s = 0;  l = i+1 ; r = i+1 ; }
+    }
+    
+    if( s > ans )
+    {
+        ans = s ;
+        L = l ; R = r ;
+    }
+}
+
+
+res.push_back(L+1);
+res.push_back(R+1);
+
+return res;
+}
