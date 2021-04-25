@@ -1,0 +1,25 @@
+void Solution::setZeroes(vector<vector<int> > &A) {
+    int n=A.size();
+    int m=A[0].size();
+    map<int,int>mi;
+    map<int,int>mj;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(A[i][j]==0){
+                mi[i]++;
+                mj[j]++;
+            }
+        }
+    }
+    map<int,int>::iterator it;
+    for(it=mi.begin();it!=mi.end();it++){
+        for(int i=0;i<m;i++)
+        A[it->first][i]=0;
+    }
+    for(it=mj.begin();it!=mj.end();it++){
+        for(int i=0;i<n;i++)
+        A[i][it->first]=0;
+    }
+
+    
+}
