@@ -1,0 +1,26 @@
+void swap(int *a,int *b){
+    int temp;
+    temp=*a;
+    *a=*b;
+    *b=temp;
+}
+int main()
+{
+    int a[]={8,3,5,4,6,2};
+    for(int i=0;i<6;i++){
+        int mine=a[i];
+        int ind=i;
+        for(int j=i;j<6;j++){
+            if(a[j]<mine){
+                mine=a[j];
+                ind=j;
+            }
+        }
+        
+        swap(&a[i],&a[ind]);
+    }
+    for(int k=0;k<6;k++)
+    cout<<a[k]<<" ";
+    
+  return 0;
+}
