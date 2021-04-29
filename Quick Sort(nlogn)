@@ -1,0 +1,38 @@
+void swap(int *a,int *b){
+    int temp=*a;
+    *a=*b;
+    *b=temp;
+}
+int partition(int l,int r,int a[]){
+    
+    int pivot=a[r];
+    int i=l-1,j=l;
+    while(j<r && i<=j){
+        if(a[j]<pivot){
+            i++;
+            swap(&a[j],&a[i]);
+            
+        }
+        j++;
+    }
+    swap(&a[i+1],&a[r]);
+    return i+1;
+}
+void quicksort(int a[],int l,int r){
+    if(l<r){
+        int pi=partition(l,r,a);
+        quicksort(a,l,pi-1);
+        quicksort(a,pi+1,r);
+        
+    }
+}
+int main()
+{
+    int n=5;
+    int a[]={9,4,3,5,1};
+    quicksort(a,0,n-1);
+    for(int i=0;i<n;i++)
+    cout<<a[i]<<" ";
+    
+  return 0;
+}
