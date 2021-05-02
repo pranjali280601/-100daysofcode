@@ -1,0 +1,23 @@
+vector<int> Solution::nextPermutation(vector<int> &A) {
+int n = A.size();
+int ind = -1;
+for (int i=n-2; i>=0; i--) {
+    if (A[i] < A[i+1]) {
+        ind = i;
+        break;
+    }
+}
+if (ind == -1) {
+    sort(A.begin(), A.end());
+} else if (ind + 1 < n){
+    sort(A.begin() + ind + 1, A.end());
+    for (int i=ind+1; i<n; i++) {
+        if (A[i] > A[ind]) {
+            int tmp = A[i];
+            A[i] = A[ind];
+            A[ind] = tmp;
+            break;
+        }
+    }
+}
+return A;
