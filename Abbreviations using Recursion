@@ -1,0 +1,22 @@
+void solve(string str, int len,int count,int n, string ans){
+    if(len==n){
+        if(count==0)
+        cout<<ans<<endl;
+        else
+        cout<<ans+to_string(count)<<endl;
+        return;
+    }
+    if(count>0)
+    solve(str,len+1,0,n,ans+to_string(count)+str[len]);
+    else
+    solve(str,len+1,0,n,ans+str[len]);
+    solve(str,len+1,count+1,n,ans);
+}
+int main()
+{
+    string s;
+    cin>>s;
+    int n=s.length();
+    solve(s,0,0,n,"");
+  return 0;
+}
