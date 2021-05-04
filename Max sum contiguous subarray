@@ -1,0 +1,11 @@
+int Solution::maxSubArray(const vector<int> &A) {
+    int n=A.size();
+    int dp[n],maxe=A[0];
+    dp[0]=A[0];
+    for(int i=1;i<n;i++)
+    {
+        dp[i]=max(dp[i-1]+A[i],A[i]);
+        maxe=max(maxe,dp[i]);
+    }
+    return maxe;
+}
