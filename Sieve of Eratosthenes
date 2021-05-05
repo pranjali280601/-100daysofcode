@@ -1,0 +1,20 @@
+void sieve(int n){
+    vector<bool>visited(n+1,true);
+    for(int i=2;i<=sqrt(n);i++){
+        if(visited[i]){
+            for(int j=i*i;j<=n;j+=i)
+            visited[j]=false;
+        }
+    }
+    for(int i=2;i<=n;i++)
+    if(visited[i])
+    cout<<i<<" ";
+    cout<<endl;
+}
+int main()
+{
+    int n=50;
+    sieve(n);
+    
+  return 0;
+}
