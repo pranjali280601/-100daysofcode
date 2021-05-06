@@ -1,0 +1,31 @@
+An efficient solution is to use Euclidean algorithm which is the main algorithm used for this purpose. The idea is, GCD of two numbers doesn’t change if smaller number is subtracted from a bigger number. 
+
+
+#include <iostream>
+using namespace std;
+// Recursive function to return gcd of a and b
+int gcd(int a, int b)
+{
+    // Everything divides 0
+    if (a == 0)
+       return b;
+    if (b == 0)
+       return a;
+  
+    // base case
+    if (a == b)
+        return a;
+  
+    // a is greater
+    if (a > b)
+        return gcd(a-b, b);
+    return gcd(a, b-a);
+}
+  
+// Driver program to test above function
+int main()
+{
+    int a = 98, b = 56;
+    cout<<"GCD of "<<a<<" and "<<b<<" is "<<gcd(a, b);
+    return 0;
+}
