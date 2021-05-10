@@ -1,0 +1,75 @@
+// Kruskal's algorithm in C++
+
+#include <algorithm>
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#define edge pair<int, int>
+
+class Graph{
+    int V;
+    vector<pair<int,edge>>G;
+    vector<pair<int,edge>>T;
+    int *parent;
+    public:
+    Graph(int V){
+        parent=new int[V];
+        
+        for(int i=0;i<V;i++)
+        parent[i]=i;
+        G.clear();
+        T.clear();
+    }
+    void AddWeightedEdge(int a,int b,int c){
+        pair<int,int>p={a,b};
+        
+        G.push_back(make_pair(c,p));
+    }
+    int find_set(int i){
+        if(parent[i]==i)
+        return i;
+        return find_set(parent[i]);
+    }
+    void union_set(int u,int v){
+        parent[u]=parent[v];
+    }
+    void kruskal(){
+        sort(G.begin(),G.end());
+        for(int i=0;i<G.size();i++){
+            int fr,to;
+            fr=find_set(G[i].second.first);
+            to=find_set(G[i].second.second);
+            if(fr!=to)
+            {
+                union_set(fr,to);
+                T.push_back(G[i]);
+            }
+        }
+    }
+    void print(){
+        for(int i=0;i<T.size();i++)
+        cout<<T[i].second.first<<" "<<T[i].second.second<<" "<<T[i].first<<endl;
+    }
+};
+int main() {
+  Graph g(6);
+  g.AddWeightedEdge(0, 1, 4);
+  g.AddWeightedEdge(0, 2, 4);
+  g.AddWeightedEdge(1, 2, 2);
+  g.AddWeightedEdge(1, 0, 4);
+  g.AddWeightedEdge(2, 0, 4);
+  g.AddWeightedEdge(2, 1, 2);
+  g.AddWeightedEdge(2, 3, 3);
+  g.AddWeightedEdge(2, 5, 2);
+  g.AddWeightedEdge(2, 4, 4);
+  g.AddWeightedEdge(3, 2, 3);
+  g.AddWeightedEdge(3, 4, 3);
+  g.AddWeightedEdge(4, 2, 4);
+  g.AddWeightedEdge(4, 3, 3);
+  g.AddWeightedEdge(5, 2, 2);
+  g.AddWeightedEdge(5, 4, 3);
+  g.kruskal();
+  g.print();
+  return 0;
+}
