@@ -1,0 +1,59 @@
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        
+        if (numCourses < 1 || numCourses > 100000)
+            return false;
+        if (prerequisites.size() > 5000)
+            return false;
+        
+        // prereq[i] = all the prerequisites of course i
+        vector<vector<int>> prereq(numCourses, vector<int>());
+        
+        // visitied[i] = the visiting status of course i
+        // 1 = being visited; 0 = not visited; -1 = finished
+        vector<int> visited(numCourses, 0);
+        
+        
+        // import the data from prerequisitis to prereq
+        for(int i = 0; i < prerequisites.size(); i++){
+            if (prerequisites[i].size() != 2)
+                return false;
+            int coursea = prerequisites[i][0];
+            int courseb = prerequisites[i][1];
+            prereq[coursea].push_back(courseb);
+        }
+           
+        
+        // check if there exists a loop in the dependency with dfs
+        for(int j = 0; j < numCourses; j++){
+            if(visited[j] == 0 && !dfs(visited, j, prereq)) // if there exists dependency in the branch after the unvisited node
+                return false;
+        }    
+        return true; 
+    }
+    
+    
+    // use dfs to check dependency
+    bool dfs(vector<int>& visited, int i, const vector<vector<int>>& prereq){
+        
+        // base case: if the node is being visited in the same search, there exists a loop
+        if(visited[i] == 1)
+            return false;
+        // base case: no need to check finished node
+        if(visited[i] == -1)
+            return true;
+        
+        // flag the node as being visited
+        visited[i] = 1;
+        
+        // recursively check other nodes on the branch
+        for(int j = 0; j < (prereq[i]).size(); j++){
+            if(!dfs(visited, prereq[i][j], prereq)) return false;
+        }
+        
+        // no cycle detected after the node, flag the node as finished
+        visited[i] = -1;
+        return true;
+    }
+};
