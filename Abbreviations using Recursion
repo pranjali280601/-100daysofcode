@@ -1,4 +1,4 @@
-void solve(string str, int len,int count,int n, string ans){
+void solve(string str, int len,int count,int n, string ans){    //imp
     if(len==n){
         if(count==0)
         cout<<ans<<endl;
